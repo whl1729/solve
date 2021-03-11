@@ -2,6 +2,8 @@
 
 ## 2021-03
 
+- [ ] Q11 2021-03-11 JavaScript的Promise是什么？
+- [ ] Q10 2021-03-11 JavaScript的async/await机制是怎样的？
 - [ ] Q9 2021-03-10 如何管理vimrc/bashrc等配置文件？
 - [ ] Q8 2021-03-10 如何构造双字母表PAO系统？
 - [ ] Q7 2021-03-07 如何使用Vue和Element开发前端？
