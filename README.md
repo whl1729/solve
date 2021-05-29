@@ -1,2 +1,3 @@
-# solving
-records how to solve problems
+# solve
+
+记录我提出的问题及解决过程。
