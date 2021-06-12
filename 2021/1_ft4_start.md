@@ -1,77 +1,20 @@
-# 问题集（2021年3月1日～2021年3月7日）
+# Q1 ft4项目的启动流程是怎样的？
 
-## 2021-03-07
+## 修改说明
 
-### Q7: 如何使用Vue和Element开发前端？
+| 时间 | 版本 | 说明 |
+| ---- | ---- | ---- |
+| 2021-03-02 | 1.0.0 | 提出问题 |
+| 2021-03-07 | 1.0.1 | 解答问题 |
 
-## 2021-03-06
-
-### Q6: 浏览器的工作原理是怎样的？
-
-#### 明确问题
-
-当我问浏览器的工作原理时，我究竟想问什么？
-
-首先看下：关于浏览器，我已经知道哪些东西。
-
-- 浏览器最核心的工作是为用户提供浏览网页的功能。
-- 为实现这个功能，浏览器首先需要获得网页数据。这些网页数据可能来自本地，也可能来自远端服务器。无论哪种情况，都可以通过URL地址来标记网页位置。
-- URL地址一般提供的是域名，而网络通信时需要的是IP地址。因此一般需要通过DNS服务器来将域名转换为IP。
-- 为获取这些数据，浏览器需要支持各种通信协议，最常见的是http(s)协议。
-- 网页数据一般包括html、css和js等文件，以及图片、音频、视频等多媒体数据。
-- 获取到这些网页数据后，浏览器需要将它们恰当地呈现出来。（或者说渲染）
-
-我目前主要不理解的地方是：**浏览器是如何渲染html/css/js的？** （这个问题与Q5有点重复，可以一并解决）
-
-以及，听说浏览器一般有主进程和渲染进程之分，那么它们是如何分工合作的？
-
-#### 参考资料
-
-1. [Critical rendering path](https://developer.mozilla.org/en-US/docs/Web/Performance/Critical_rendering_path)
-2. [How Browsers Work: Behind the scenes of modern web browsers](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)
-
-### Q5: 浏览器加载html/css/js的流程是怎样的？
-
-## 2021-03-04
-
-### Q4: pcba_test如何确保`Ctrl+C`可以终止运行？
-
-## 2021-03-03
-
-### Q3: git内部是怎样实现的？
-
-这个问题问得有点泛，让我们问得具体些：git是如何实现版本管理的？
-
-这个问题可以在《Pro Git》找到答案。
-
-- git可以视为一个提供了版本管理功能的文件系统，也可以视为一个数据库。git的数据保存在当前仓库根目录下的`.git`目录中。git的大部分操作实际上就是对`.git`目录下的文件进行增删查改。
-- 对git而言，一个版本就是一个commit。而一个commit包含有某次提交记录的基本信息（who, when, commit message, previous commit），以及这次提交后的所有文件内容。
-- 这时就涉及到一个问题，git是如何存储数据的？
-  - 当你创建一个新文件时，git 会将该文件经过处理后保存在`.git/objects`目录下。处理过程如下：首先为该文件生成一个header（包含object类型及长度这两个信息），然后和文件内容合并，对合并后的数据计算出SHA1校验和，作为保存的文件名；对合并后的数据进行压缩，作为保存的文件内容。
-- git里面最常见的object有3种：blob, commit, tree，分别对应文件、提交记录、文件夹。此外还有tag等。
-- 上面说到，每次commit都记录了本次提交后的所有文件内容，如何记录的呢？事实上，每个commit对象都指向一个tree对象（每个commit都记录有一个tree对象的SHA1校验和），这个tree对象又指向若干个tree对象和blob对象，类似文件系统的树结构。
-- git分支其实只是一个「指针」，指向一个commit对象。创建一个本地分支develop，就是在`.git/refs/head`目录下创建一个名字叫develop的文件，文件的内容就是某个commit对象的SHA1校验和。也就是说，一个git分支其实只是一个含有40个字节的文件！
-- `.git/HEAD`文件一般用来记录当前处于哪个分支，当然你也可以checkout某个tag或者任意一次commit，这时HEAD会指向对应的commit对象，git也会提示`You are in 'detached HEAD' state`
-- 最后简单说下常见git操作与`.git`目录之间的联系
-  - `git add`会在`.git/objects`目录下创建一个新文件，对应一个blob对象。
-  - `git commit`会在`.git/objects`目录下创建一个新文件，对应一个commit对象。
-  - `git branch -a`会在`.git/refs`目录下创建一个新文件，里面记录一个commit对象的SHA1校验和。
-  - `git checkout`会修改`.git/HEAD`文件，使其执行新的commit对象。
-
-### Q2: js如何使用其他包的函数？
-
-## 2021-03-02
-
-### Q1: ft4项目的启动流程是怎样的？
-
-#### 解答
+## 解答
 
 1. 主进程执行`src/background.js`，会创建窗口，加载`index.html`文件。
 2. `index.html`文件会导入`src/main.js`，该脚本由渲染进程运行，完成Vue相关的功能。
 3. 特别注意的是，代码文件index.html中并没有引入`src/main.js`，但使用`vue-cli-plugin-electron-builder`工具编译时，会在index.html增加导入的语句。
 4. 我对主进程与渲染进程的分工合作过程不够了解，对js脚本的加载流程也不够了解，需要进一步研究。
 
-#### 分析过程
+## 分析过程
 
 1. ft4项目用到了很多技术
   - electron
@@ -128,7 +71,7 @@
     - `[application name] setup [version].[target binary (exe|dmg|rpm ...)]`: Electron app的安装程序
     - index.js: 编译后的background file，`electron:serve`的入口脚本。
 
-#### 参考资料
+## 参考资料
 
 1. [creating a package.json file](https://docs.npmjs.com/creating-a-package-json-file)
 2. [Yarn: A new package manager for JavaScript](https://engineering.fb.com/2016/10/11/web/yarn-a-new-package-manager-for-javascript/)

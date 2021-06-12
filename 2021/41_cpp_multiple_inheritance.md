@@ -1,39 +1,20 @@
-# 问题集（2021年4月5日～2021年4月11日）
+# Q41 C++ 使用多继承有什么缺点吗？
 
-## 2021-04-11
+## 修改说明
 
-### Q48 如何更好地思考？
+| 时间 | 版本 | 说明 |
+| ---- | ---- | ---- |
+| 2021-04-09 | 1.0.0 | 提出问题 |
+| 2021-04-10 | 1.0.1 | 解答问题 |
 
-### Q47 Debian, Fedora, RPM, Ubuntu 与 Linux 有什么联系？
-
-### Q46 如何检查Markdown文档的规范性？
-
-## 2021-04-10
-
-### Q45 如何提高开发效率？
-
-- vim 配置放在github上。（伍注：所有常用的配置文件都放在github上）
-- 总结有自己的 codesnip。
-- 注意代码复用，时刻注意重构和抽取公共代码。
-
-### Q44 如何使用git rebase解决冲突？
-
-- 执行`git rebase <some-branch>` 或者 `git pull --rebase`
-- 打开提示冲突的文件，解决冲突，然后执行`git add`，则该文件的冲突已经解决
-- 执行`git rebase --continue`，继续解决其他冲突
-
-### Q43 如何安装及使用fish？
-
-## 2021-04-09
-
-### Q42 C++ 构造函数的定义允不允许进行可能失败的操作？
-
-### Q41 C++ 使用多继承有什么缺点吗？
+## 解答
 
 1. 参考[Inheritance — Multiple and Virtual Inheritance][inheritance]
 2. 多继承可以提供灵活性。误用则可能导致代码规模增长快、代码复杂度高。
 
-#### Some disciplines for using multiple inheritance
+  [inheritance]: https://isocpp.org/wiki/faq/multiple-inheritance
+
+### Some disciplines for using multiple inheritance
 
 > M.I. rule of thumb #1: Use inheritance only if doing so will remove if / switch statements from the caller code.
 > M.I. rule of thumb #2: Try especially hard to use ABCs(Abstract Base Class) when you use MI. This rule of thumb tends to push people toward inheritance-for-interface-substitutability.
@@ -41,7 +22,7 @@
 
 > In particular, inheritance is not for code-reuse. You sometimes get a little code reuse via inheritance, but **the primary purpose for inheritance is dynamic binding, and that is for flexibility**. Composition is for code reuse, inheritance is for flexibility.
 
-#### multiple inheritance, bridge pattern and nested generalization
+### multiple inheritance, bridge pattern and nested generalization
 
 - bridge pattern
   - advantage: 代码规模增长慢
@@ -53,7 +34,7 @@
   - advantage: 细粒度控制、可以消除一些无意义的搭配
   - disadvantage: 代码规模增长快
 
-#### Goodness criteria
+### Goodness criteria
 
 - Grow Gracefully
 - Low Code Bulk
@@ -61,5 +42,3 @@
 - Static Detect Bad Combos
 - Polymorphic on Both Sides
 - Share Common Code
-
-  [inheritance]: https://isocpp.org/wiki/faq/multiple-inheritance
