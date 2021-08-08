@@ -2,6 +2,8 @@
 
 ## 2021-08
 
+- [ ] Q83 2021-08-08 Python class 如何封装 private method ？
+- [ ] Q82 2021-08-08 在 Python class method 里创建新的 attribute 是不是坏实践？
 - [ ] Q81 2021-08-07 如何使用 Json Schema 编写可靠的json文件？
 
 ## 2021-07
