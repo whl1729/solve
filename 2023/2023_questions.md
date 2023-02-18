@@ -2,6 +2,7 @@
 
 ## 2023-02
 
+- [ ] Q145 2023-02-18 Ubuntu 系统如何提供 bluetooth obex ftp 服务？
 - [ ] Q144 2023-02-16 node-gyp 的工作原理是什么？为什么 `npm install bluetooth-serial-port`会报错？
 - [ ] Q143 2023-02-08 天空为什么是蓝色？
 - [ ] Q142 2023-02-08 光的偏振的现象和原理是什么？
