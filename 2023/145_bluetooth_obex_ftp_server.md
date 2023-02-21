@@ -4,7 +4,74 @@
 
 ## 思路
 
-首先理解三个概念：bluetooth、obex、ftp。
+- 首先理解三个概念：bluetooth、obex、ftp。
+- 然后搞清楚 ubuntu 的蓝牙模块是怎么工作的，尤其是需要启动哪些服务
+  - 搞清楚 bluez、bluetoothd、obexd、openobex 和 obexftpd 等软件的关系
+- 还有使用 `bt-obex -f` 进行 ftp 通信时会报错，需要调查清楚，很可能与 obexftpd 无法通信是相同的原因。
+
+### bluez、bluetoothd
+
+- Ubuntu Core 有两个蓝牙协议栈的接口：bluetooth-control 和 bluez，其中 bluez 默认是没安装的。
+- bluez 包括有 L2CAP、RFCOMM 和 SDP 等模块。
+- 安装 bluez 时会安装 /usr/bin/bluetoothctl 和 /usr/lib/bluetooth/bluetoothd，这么看 bluetoothctl 可能是用来跟 bluetoothd 通信的。
+- bluetoothd 是管理蓝牙设备的后台程序。
+
+### obexd
+
+- 安装 bluez-tools 时会安装 bluez-obexd、bt-adapter、bt-device 和 bt-network 等工具。
+- 根据蓝牙协议栈，OBEX 是工作在 RFCOMM 之上的，做个简单的类比，RFCOMM 相当于传输层的 TCP/UDP，而 OBEX 相当于应用层的 HTTP。
+- 那么也可以这么理解：bluetoothd 是管理传输层的服务，obexd 是管理应用层的服务。
+- `bt-obex -f`进入 ftp 会话后，执行上传文件命令会报错，如下所示。
+  - 从报错信息来看，很可能是 obexd 不支持 ftp 协议，这跟我昨天查阅到的 obex 的源码行为是一致的。
+  - [bluez-tools][3] 的官网介绍中，也提到 FTP会话在输入 `ls` 后会崩溃的问题。
+
+  ```bash
+  > mkdir /tmp/ftp
+  GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: Method "CreateFolder" with signature "s" on interface "org.bluez.obex.FileTransfer" doesn't exist
+
+  > put README .
+  (bt-obex:88132): GLib-CRITICAL **: 14:57:37.589: g_variant_ref_sink: assertion 'value != NULL' failed
+
+  (bt-obex:88132): GLib-CRITICAL **: 14:57:37.589: g_variant_unref: assertion 'value != NULL' failed
+  GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: Method "PutFile" with signature "ss" on interface "org.bluez.obex.FileTransfer" doesn't exist
+  ```
+
+### openobex
+
+- openobex 应该算是 bluez-tools 的一个替代方案。
+- kill 掉 obexd 进程后，使用 obexftpd 可以上传文件了，但上传完 obexftpd 又把文件删除了，日志打印如下所示：
+
+  ```bash
+  along:~/Documents/ft/dfh3/src/obexftp$ obexftpd -b 10 -c ~/Downloads/
+  Waiting for connection...
+  obex_event() OBEX_EV_REQCHECK: mode=01, obex_cmd=00, obex_rsp=00
+  Incoming request 00
+  \obex_event() OBEX_EV_REQDONE: obex_rsp=00
+  obex_event() OBEX_EV_REQCHECK: mode=01, obex_cmd=02, obex_rsp=00
+  |obex_ev_progress: obex_cmd_put
+  put_done>>>
+  put_done () Skipped header cb
+  put file name: minieye.txt
+  HEADER_LENGTH = 15
+  Got a PUT without a body
+  Incoming request 02
+  Received PUT command
+  put_done>>>
+  Got a PUT without a body
+  Deleting file minieye.txt
+  <<<put_done
+  /obex_ev_progress: obex_cmd_put
+  put_done>>>
+  Got a PUT without a body
+  Got a PUT without a name. Setting name to OBEX_PUT_Unknown_object
+  obex_event() OBEX_EV_REQDONE: obex_rsp=00
+  obex_event() OBEX_EV_REQCHECK: mode=01, obex_cmd=01, obex_rsp=00
+  Incoming request 01
+  -obex_event() OBEX_EV_REQDONE: obex_rsp=00
+  failed: 0
+  obexftpd reset
+  Waiting for connection...
+  ```
 
 ### bluetooth
 
@@ -64,8 +131,10 @@
     - OBEX 单个连接可能做多个操作。
   - OBEX 的 Object 是 fields 和 headers.
 
+- OBEX 是许多高层的 profiles 的基础，包括 OPP 和 FTP 等
+
 - OBEX 协议
-  - OPP: OBEX Push Profile
+  - OPP: OBEX Object Push Profile
   - FTP: OBEX File Transfer Protocol (or Profile)
 
 - OBEX 实现
@@ -81,3 +150,18 @@
 - 目前为止，关于 FTP 我不知道什么？
   - FTP 是工作在 TCP/IP 之上的吧？
   - FTP 协议是怎样的？
+
+## 参考资料
+
+- [wiki: bluetooth][1]
+- [wiki: OBject EXchange][2]
+- [bluez-tools][3]
+- [github: openobex][4]
+- [wiki: openobex][5]
+
+  [1]: https://en.wikipedia.org/wiki/Bluetooth
+  [2]: https://en.wikipedia.org/wiki/OBject_EXchange
+  [3]: https://code.google.com/archive/p/bluez-tools/
+  [4]: https://github.com/zuckschwerdt/openobex
+  [5]: http://dev.zuckschwerdt.org/openobex/wiki/
+
