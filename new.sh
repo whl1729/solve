@@ -5,8 +5,10 @@ if [ $# = 0 ]; then
   exit 1
 fi
 
-readonly FILE="$1"
-readonly QUESTIONS="2022_questions.md"
+readonly DIR="$(pwd)"
+echo "current working directory: $(pwd)"
+readonly FILE="${DIR}/$1"
+readonly QUESTIONS="${DIR}/*_questions.md"
 readonly HEADLINE="$(cat ${QUESTIONS} | grep -E ^- | head -1 | sed 's/- \[ \] \([^ ]\+\) [^ ]\+ \(.*\)/# \1 \2/g')"
 readonly TODAY="$(date +%Y-%m-%d)"
 
