@@ -1,5 +1,11 @@
 # Q139 为什么我在 Windows 系统下无法 `git pull` github 仓库？
 
+## 版本说明
+
+| 时间 | 版本 | 说明 |
+| ---- | ---- | ---- |
+| 2023-01-16 | 1.0 | 初稿 |
+
 ## 解答
 
 `git pull` 的报错内容为：`ssh: connect to host 13.234.176.102 port 22: Connection timed out`。

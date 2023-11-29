@@ -42,7 +42,7 @@
 
 - [ ] Q89 2021-08-31 JavaScript class 如何封装 private method？
 - [ ] Q88 2021-08-31 JavaScript 如何决定使用class static method 还是 function？
-- [ ] Q87 2021-08-29 人生的意义是什么？
+- [x] Q87 2021-08-29 人生的意义是什么？
 - [ ] Q86 2021-08-23 进程、stdio、设备驱动三者的联系是怎样的？
 - [ ] Q85 2021-08-19 修改html元素时应该使用jQuery还是原生dom？
 - [ ] Q84 2021-08-08 Shell 有哪些推荐的编程规范？

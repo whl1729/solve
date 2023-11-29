@@ -34,10 +34,10 @@
 齐次坐标的引入可以解决两个问题：一是可以实现投影，二是可以通过线性变换来实现平移。
 
 > we will gain two key advantages by moving from three-component Cartesian coordinates to four-component homogeneous coordinates.
-> These are 1) the ability to apply perspective and 2) the ability to translate (move) the model using only a linear transform.
+> These are (1) the ability to apply perspective and (2) the ability to translate (move) the model using only a linear transform.
 > That is, we will be able to get all the rotations, translations, scaling, and projective transformations we need by doing matrix multiplication if we first move to a four-coordinate system.
-
-> 备注：线性变换满足以下条件：T(a * x + b * y) = a * T(x) + b * T(y)
+>
+> 备注：线性变换满足以下条件：`T(a * x + b * y) = a * T(x) + b * T(y)`
 
 用自己的话来解释一下吧。
 
