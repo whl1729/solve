@@ -1,8 +1,17 @@
 #!/bin/bash
 
-if [ $# = 0 ]; then
+function show_usage() {
   echo "Usage: $0 filename"
+}
+
+if [[ "$1" == "" ]]; then
+  show_usage
   exit 1
+fi
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+  show_usage
+  exit 0
 fi
 
 readonly SOLUTION_DIR="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P)"
