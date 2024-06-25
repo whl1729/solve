@@ -4,6 +4,7 @@
 
 | 时间 | 版本 | 说明 |
 | ---- | ---- | ---- |
+| 2024-06-25 | 1.1 | 增加 intext、intitle 和 inurl 等技巧 |
 | 2024-01-07 | 1.0 | 介绍 Google 搜索的基本技巧 |
 
 ## 解答
@@ -43,16 +44,25 @@ the * of money
 Star Wars ~Presents
 ```
 
-- 搜索标题中包含完整关键词的网页
+- 搜索标题中包含（完整）关键词的网页
 
 ```text
 allintitle:google search tips
+intitle:google search tips
 ```
 
-- 搜索页面中包含完整关键词的网页
+- 搜索页面中包含（完整）关键词的网页
 
 ```text
 allintext:google search tips
+intext:google search tips
+```
+
+- 搜索 URL 中包含（完整）关键词的网页
+
+```text
+allinurl:autopilot simulation
+inurl:autopilot simulation
 ```
 
 - 排除某些单词
@@ -87,9 +97,13 @@ related:google.com
 ```
 
 - 一些常见用法
-  - 词典：在单词前面加上 define 关键词：`define nephropathy`
+  - 词典：在单词前面加上 `define:` 关键词：`define: nephropathy`
   - 计算：直接输入数学表达式
   - 单位转换：`3 dollars in euros`
+
+- 一些注意事项
+  - 不要问谷歌问题。想一想答案会有哪些词语，然后搜索这些词语
+  - `Ctrl + L` 选中浏览器地址栏
 
 ## 参考资料
 
